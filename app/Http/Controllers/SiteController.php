@@ -31,7 +31,6 @@ class SiteController extends Controller
         try{
             $fcmTokens = User::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-
             //Notification::send(null,new SendPushNotification($request->title,$request->message,$fcmTokens));
 
             /* or */
@@ -53,5 +52,19 @@ class SiteController extends Controller
             report($e);
             return redirect()->back()->with('error','Something goes wrong while sending notification.');
         }
+    }
+
+    public function fcmTokenUpdate(Request $request)
+    {
+        $request->validate([
+            'userid'=>'required',
+            'device_token' =>'required',
+        ]);
+        $user = User::find($request->userid);
+        $user->fcm_token = $request->device_token;
+        $user->save();
+        return response()->json([
+         'success'=>true
+        ]);
     }
 }

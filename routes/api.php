@@ -24,6 +24,7 @@ use Kutia\Larafirebase\Facades\Larafirebase;
 //    return Larafirebase::withTitle('Test Title')->withBody('Test body')->sendNotification($fcmTokens);
 //});
 
+Route::patch('/device-token-update', [SiteController::class, 'fcmTokenUpdate'])->name('fcmTokenUpdate');
 Route::patch('/fcm-token', [SiteController::class, 'updateToken'])->name('fcmToken');
 Route::post('/send-notification',[SiteController::class,'notification'])->name('notification');
 
